@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>List All</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet" type="text/css"/>
+    <link th:href="@{css/main.css}" href="../static/css/main.css" rel="stylesheet" type="text/css"/>
+    <link th:href="@{css/footer.css}" href="../static/css/footer.css" rel="stylesheet" type="text/css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script th:src="@{js/footer.js}" src="../static/js/footer.js"></script>
+</head>
+<body>
+<main>
+    <h1>List All</h1>
+    <table th:unless="${#lists.isEmpty(pets)}">
+        <tr>
+            <th>Count</th>
+            <th>Pet Name</th>
+            <th>Options</th>
+        </tr>
+        <tr th:each="s,c: ${pets}">
+            <td th:text="${c.count}">1</td>
+
+            <td th:text="${s.petname}">John</td>
+            <td>
+                <a href="PetDetails.html" th:href="@{pet-details/{id}(id=${s.id})}">Details</a>
+                &nbsp;|&nbsp;
+                <a href="EditPet.html" th:href="@{edit-pet(id=${s.id})}">Edit</a>
+                &nbsp;|&nbsp;
+                <a href="DeletePet.html" th:href="@{delete-pet(id=${s.id})}">Delete</a>
+            </td>
+        </tr>
+        <!--/*-->
+        <tr>
+            <td>2</td>
+            <td>Betty</td>
+            <td>
+                <a href="PetDetails.html">Details</a>
+                &nbsp;|&nbsp;
+                <a href="EditPet.html">Edit</a>
+                &nbsp;|&nbsp;
+                <a href="DeletePet.html">Delete</a>
+            </td>
+        </tr>
+        <!--*/-->
+    </table>
+    <p class="message" th:if="${#lists.isEmpty(pets)}">No Pet data</p>
+    <p><a href="Index.html" th:href="@{index}">Index</a></p>
+    <p><a href="AddPet.html" th:href="@{add-pet}">Add Pet</a></p>
+    <p><a href="ListPets.html" th:href="@{delete-all}">Delete All</a></p>
+</main>
+</body>
+</html>

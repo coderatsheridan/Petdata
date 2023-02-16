@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Edit Record</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet" type="text/css"/>
+    <link th:href="@{css/main.css}" href="../static/css/main.css" rel="stylesheet" type="text/css"/>
+    <link th:href="@{css/footer.css}" href="../static/css/footer.css" rel="stylesheet" type="text/css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script th:src="@{js/footer.js}" src="../static/js/footer.js"></script>
+</head>
+<body>
+<main>
+    <h1>Edit Record</h1>
+    <form method="post"
+          th:action="@{update-pet}" action="PetDetails.html"
+          th:object="${pet}">
+        <div th:if="${#fields.hasErrors('*')}">
+            <h3 class="error">Input Errors</h3>
+            <ul>
+                <li th:each="e: ${#fields.errors('*')}" th:text="${e}"
+                    class="error">Input Error</li>
+            </ul>
+        </div>
+        <input type="hidden" th:field="*{id}">
+        <h2>Pet Name</h2>
+        <p>
+            <label for="pet" class="group_label">Pet Name</label><br>
+            <input id="pet" type="text" th:field="*{petname}" value="John"/>
+            <span th:if="${#fields.hasErrors('petname')}"
+                  class="error">&larr;&nbsp;<span th:errors="*{petname}">Pet Name Error</span></span>
+        </p>
+
+        <h2>Pet Info:</h2>
+        <p>
+            <label for="kind" class="group_label">Pet Kind</label><br>
+            <select id="kind" th:field="*{petkind}">
+                <option th:each="p: ${kind}"
+                        th:value="${p}" th:text="${p}">Dog</option>
+            </select>
+            <span th:if="${#fields.hasErrors('petKind')}" th:errors="*{petkind}"
+                  class="error">&larr;&nbsp;<span th:errors="*{petkind}">Pet Kind Error</span></span>
+        </p>
+        <p>
+            <label class="group_label">Pet Sex</label><br>
+            <span th:each="y: ${#numbers.sequence(1,2)}">
+               <label><input type="radio" name="petSex" value="1"
+                             th:field="*{petsex}" th:value="${y}"><span th:text="${y}">Male</span></label>
+            </span>
+            <!--/*-->
+            <label><input type="radio" name="petSex" value="2">Female</label>
+            <!--*/-->
+            <span th:if="${#fields.hasErrors('petSex')}"
+                  class="error">&larr;&nbsp;<span th:errors="*{petsex}">Pet Sex Error</span></span>
+        </p>
+        <p>
+            <label class="group_label">Vaccination</label><br>
+            <label><input type="checkbox" th:field="*{petvax_yes}" th:value="yes"/>Vaccinated</label>
+            <label><input type="checkbox" th:field="*{petvax_no}" th:value="yes"/>Not Vaccinated</label>
+        </p>
+        <p>
+            <input type="reset" value="Clear"/>
+            <input type="submit" value="Send"/>
+        </p>
+    </form>
+    <p><a href="Index.html" th:href="@{index}">Index</a></p>
+    <p><a href="ListPets.html" th:href="@{list-pets}">List Pets</a></p>
+</main>
+</body>
+</html>
